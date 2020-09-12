@@ -1,0 +1,16 @@
+{% extends "cvmaker/base.html" %}
+{% load crispy_forms_tags%}
+{% block content %}
+    <div class="content-section">
+	<form method="POST">
+		<fieldset class="form-group">
+			<legend class="border-bottom mb-4">CV</legend>
+			{{form|crispy}}
+		</fieldset>
+		<div class="form-group">
+			<button class="btn btn-outline-info" type="submit">Submit</button>
+		</div>
+	{%csrf_token%}	
+	</form>
+</div>
+{% endblock content %}

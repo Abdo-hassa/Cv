@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from .models import cv
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -11,20 +10,17 @@ def home(request):
 
 def Cv(request):
 	context = {
-        'cvs': cv.objects.all(),
-    }
-	return render(request,'cvmaker/Cv.html',context)
+		'cvs': cv.objects.last()
+	}
+	return render(request,'cvmaker/srt-resume.html',context)
 
 
-class PostListView(ListView):
-    model = cv
-    template_name = 'cvmaker/Cv.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'cvs'
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
-    model = cv
-    fields = ['fullname', 'job_title','profile', 'skill_1','skill_2', 'skill_3','Technicale', 'education']
+	model = cv
+	fields = ['fullname', 'job_title','profile', 'skill_1','skill_2', 'skill_3','Technicale', 'education']
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
